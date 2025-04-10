@@ -1,0 +1,23 @@
+BizsHub.com Dev
+
+
+
+
+
+
+1) user auth by webauthen.
+2) main site leading by laravel
+3) editor site creation by wordpress
+4) all business leading directory solution from main laravel site like
+	coffeehouse.maindomain.com
+	maindomain.com/coffeehouse
+
+
+
+
+
+
+
+
+
+
