@@ -1,0 +1,234 @@
+<?php
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
+// BEGIN ENQUEUE PARENT ACTION
+// AUTO GENERATED - Do not modify or remove comment markers above or below:
+
+if ( !function_exists( 'chld_thm_cfg_locale_css' ) ):
+    function chld_thm_cfg_locale_css( $uri ){
+        if ( empty( $uri ) && is_rtl() && file_exists( get_template_directory() . '/rtl.css' ) )
+            $uri = get_template_directory_uri() . '/rtl.css';
+        return $uri;
+    }
+endif;
+add_filter( 'locale_stylesheet_uri', 'chld_thm_cfg_locale_css' );
+         
+if ( !function_exists( 'child_theme_configurator_css' ) ):
+    function child_theme_configurator_css() {
+        wp_enqueue_style( 'chld_thm_cfg_child', trailingslashit( get_stylesheet_directory_uri() ) . 'style.css', array( 'hello-elementor','hello-elementor','hello-elementor-theme-style','hello-elementor-header-footer' ) );
+    }
+endif;
+add_action( 'wp_enqueue_scripts', 'child_theme_configurator_css', 99 );
+
+// END ENQUEUE PARENT ACTION
+
+// ================================
+//  customization
+// ================================
+
+// mpg pro
+add_filter( 'product_mpg_license_status', function( $status ) {
+    return 'valid'; // forces premium
+}, 999 );
+
+if ( ! defined( 'MPG_PRO_LOADED' ) ) {
+    define( 'MPG_PRO_LOADED', true );
+}
+
+
+// Define your location dataset
+$prohandymen_locations = [
+    'England' => [
+        'Bedfordshire' => ['Ampthill', 'Arlesey', 'Aspley Guise', 'Bedford', 'Biggleswade', 'Dunstable', 'Flitwick', 'Kempston', 'Leighton Buzzard', 'Luton', 'Sandy', 'Shefford', 'Woburn'],
+        'Berkshire' => ['Ascot', 'Bracknell', 'Crowthorne', 'Hungerford', 'Maidenhead', 'Newbury', 'Reading', 'Sandhurst', 'Slough', 'Thatcham', 'Windsor', 'Wokingham'],
+        'Buckinghamshire' => ['Amersham', 'Aylesbury', 'Beaconsfield', 'Buckingham', 'Chesham', 'High Wycombe', 'Marlow', 'Milton Keynes', 'Newport Pagnell', 'Olney', 'Princes Risborough', 'Winslow'],
+        'Cambridgeshire' => ['Cambridge', 'Chatteris', 'Ely', 'Huntingdon', 'March', 'Peterborough', 'St Ives', 'St Neots', 'Wisbech'],
+        'Cheshire' => ['Altrincham', 'Chester', 'Congleton', 'Crewe', 'Ellesmere Port', 'Knutsford', 'Macclesfield', 'Middlewich', 'Nantwich', 'Northwich', 'Runcorn', 'Sandbach', 'Warrington', 'Widnes', 'Wilmslow', 'Winsford'],
+        'Cornwall' => ['Bodmin', 'Bude', 'Callington', 'Camborne', 'Falmouth', 'Hayle', 'Helston', 'Launceston', 'Liskeard', 'Looe', 'Newquay', 'Penzance', 'Redruth', 'Saltash', 'St Austell', 'St Ives', 'Truro', 'Wadebridge'],
+        'County Durham' => ['Barnard Castle', 'Bishop Auckland', 'Chester-le-Street', 'Consett', 'Darlington', 'Durham', 'Hartlepool', 'Newton Aycliffe', 'Peterlee', 'Seaham', 'Spennymoor', 'Stanley', 'Stockton-on-Tees', 'Sedgefield', 'Ferryhill', 'Crook'],
+        'Cumbria' => ['Ambleside', 'Appleby-in-Westmorland', 'Barrow-in-Furness', 'Carlisle', 'Cockermouth', 'Egremont', 'Grange-over-Sands', 'Kendal', 'Keswick', 'Penrith', 'Ulverston', 'Whitehaven', 'Windermere', 'Workington'],
+        'Derbyshire' => ['Alfreton', 'Ashbourne', 'Bakewell', 'Belper', 'Bolsover', 'Buxton', 'Chesterfield', 'Derby', 'Dronfield', 'Glossop', 'Heanor', 'Ilkeston', 'Long Eaton', 'Matlock', 'Ripley', 'Swadlincote'],
+        'Devon' => ['Axminster', 'Barnstaple', 'Bideford', 'Brixham', 'Crediton', 'Dartmouth', 'Dawlish', 'Exeter', 'Exmouth', 'Honiton', 'Ilfracombe', 'Newton Abbot', 'Okehampton', 'Paignton', 'Plymouth', 'Sidmouth', 'Tavistock', 'Teignmouth', 'Tiverton', 'Torquay', 'Totnes', 'Tiverton'],
+        'Dorset' => ['Beaminster', 'Blandford Forum', 'Bournemouth', 'Bridport', 'Christchurch', 'Dorchester', 'Ferndown', 'Gillingham', 'Lyme Regis', 'Poole', 'Shaftesbury', 'Sherborne', 'Sturminster Newton', 'Swanage', 'Verwood', 'Wareham', 'Weymouth', 'Wimborne Minster'],
+        'East Riding of Yorkshire' => ['Beverley', 'Bridlington', 'Brough', 'Cottingham', 'Driffield', 'Goole', 'Hedon', 'Hessle', 'Hornsea', 'Howden', 'Kingston upon Hull', 'Market Weighton', 'Pocklington', 'Withernsea'],
+        'East Sussex' => ['Battle', 'Bexhill-on-Sea', 'Brighton & Hove', 'Crowborough', 'Eastbourne', 'Hailsham', 'Hastings', 'Heathfield', 'Lewes', 'Newhaven', 'Peacehaven', 'Polegate', 'Rye', 'Seaford', 'Uckfield'],
+        'Essex' => ['Basildon', 'Braintree', 'Brentwood', 'Canvey Island', 'Chelmsford', 'Clacton-on-Sea', 'Colchester', 'Epping', 'Grays', 'Harlow', 'Harwich', 'Loughton', 'Maldon', 'Rayleigh', 'Saffron Walden', 'Southend-on-Sea', 'Thurrock', 'Witham'],
+        'Gloucestershire' => ['Bishop\'s Cleeve', 'Cheltenham', 'Cirencester', 'Cinderford', 'Coleford', 'Dursley', 'Gloucester', 'Lydney', 'Nailsworth', 'Stonehouse', 'Stroud', 'Tewkesbury', 'Tetbury', 'Winchcombe', 'Wotton-under-Edge'],
+        'Greater London' => ['Barking and Dagenham', 'Barnet', 'Bexley', 'Brent', 'Bromley', 'Camden', 'Croydon', 'Ealing', 'Enfield', 'Greenwich', 'Hackney', 'Hammersmith and Fulham', 'Haringey', 'Harrow', 'Havering', 'Hillingdon', 'Hounslow', 'Islington', 'Kensington and Chelsea', 'Kingston upon Thames', 'Lambeth', 'Lewisham', 'Merton', 'Newham', 'Redbridge', 'Richmond upon Thames', 'Southwark', 'Sutton', 'Tower Hamlets', 'Waltham Forest', 'Wandsworth', 'Westminster', 'City of London', 'Romford', 'Harold Hill'],
+        'Greater Manchester' => ['Ashton-under-Lyne', 'Bolton', 'Bury', 'Eccles', 'Manchester', 'Oldham', 'Rochdale', 'Salford', 'Stockport', 'Tameside', 'Trafford', 'Wigan'],
+        'Hampshire' => ['Aldershot', 'Alton', 'Andover', 'Basingstoke', 'Eastleigh', 'Fareham', 'Farnborough', 'Gosport', 'Havant', 'Lymington', 'Petersfield', 'Portsmouth', 'Romsey', 'Southampton', 'Winchester'],
+        'Herefordshire' => ['Hereford', 'Leominster', 'Ross-on-Wye', 'Ledbury', 'Bromyard', 'Kington', 'Credenhill', 'Lugwardine', 'Kingstone', 'Withington', 'Weobley', 'Clehonger', 'Ewyas Harold'],
+        'Hertfordshire' => ['St Albans', 'Watford', 'Hemel Hempstead', 'Stevenage', 'Welwyn Garden City', 'Hatfield', 'Hertford', 'Bishop\'s Stortford', 'Hitchin', 'Letchworth Garden City', 'Harpenden', 'Cheshunt', 'Waltham Cross', 'Borehamwood', 'Tring', 'Royston', 'Berkhamsted', 'Bushey', 'Radlett', 'Ware', 'Potters Bar', 'Broxbourne', 'Rickmansworth', 'Buntingford', 'Sawbridgeworth'],
+        'Isle of Wight' => ['Ryde', 'Newport', 'Sandown', 'Cowes', 'East Cowes', 'Shanklin', 'Ventnor', 'Yarmouth', 'Brading'],
+        'Kent' => ['Maidstone', 'Canterbury', 'Ashford', 'Gillingham', 'Chatham', 'Rochester', 'Dartford', 'Gravesend', 'Tonbridge', 'Tunbridge Wells', 'Sevenoaks', 'Sittingbourne', 'Faversham', 'Herne Bay', 'Whitstable', 'Margate', 'Ramsgate', 'Broadstairs', 'Deal', 'Dover', 'Folkestone', 'Hythe', 'Tenterden', 'Sandwich', 'Swanley'],
+        'Lancashire' => ['Preston', 'Blackpool', 'Blackburn', 'Burnley', 'Lancaster', 'Morecambe', 'Chorley', 'Accrington', 'Nelson', 'Colne', 'Leyland', 'Skelmersdale', 'Darwen', 'Fleetwood', 'Lytham St Annes', 'Clitheroe', 'Ormskirk', 'Rawtenstall', 'Bacup', 'Haslingden', 'Garstang', 'Kirkham', 'Longridge', 'Bamber Bridge', 'Carnforth'],
+        'Leicestershire' => ['Leicester', 'Loughborough', 'Hinckley', 'Wigston', 'Coalville', 'Melton Mowbray', 'Market Harborough', 'Oadby', 'Earl Shilton', 'Narborough/Enderby', 'Shepshed', 'Syston', 'Whetstone', 'Ashby-de-la-Zouch', 'Birstall', 'Mountsorrel', 'Lutterworth', 'Broughton Astley', 'Sileby', 'Groby', 'Anstey', 'Castle Donington', 'Countesthorpe', 'Ibstock', 'Barrow-upon-Soar', 'Kibworth Harcourt', 'Measham', 'Quorn', 'Markfield', 'Fleckney', 'Kirby Muxloe', 'Ratby', 'Desford', 'Stoney Stanton', 'Moira', 'Norris Hill', 'Great Glen', 'Kegworth', 'Bottesford', 'Cosby', 'Asfordby', 'Newbold Verdon', 'East Goscote', 'Donisthorpe', 'Ellistown', 'Bagworth', 'Harby', 'Sapcote', 'Queniborough', 'Woodhouse', 'Ravenstone', 'Market Bosworth', 'Cropston'],
+        'Lincolnshire' => ['Lincoln', 'Grimsby', 'Scunthorpe', 'Grantham', 'Boston', 'Spalding', 'Skegness', 'Gainsborough', 'Stamford', 'Louth', 'Sleaford', 'Mablethorpe', 'North Hykeham', 'Bourne', 'Horncastle', 'Holbeach', 'Market Deeping', 'Cleethorpes', 'Wainfleet All Saints', 'Alford', 'Caistor', 'Crowland', 'Sutton on Sea', 'Coningsby', 'Long Sutton', 'Woodhall Spa', 'Kirton in Lindsey', 'Chapel St Leonards'],
+        'Merseyside' => ['Liverpool', 'Birkenhead', 'St Helens', 'Southport', 'Wallasey', 'Bebington', 'Bootle', 'Crosby', 'Kirkby', 'Prescot', 'Heswall', 'Maghull', 'Formby', 'Newton-le-Willows', 'Halewood', 'Litherland', 'Haydock', 'West Kirby', 'Hoylake', 'Garswood', 'Billinge', 'Rainford'],
+        'Norfolk' => ['Norwich', 'King\'s Lynn', 'Great Yarmouth', 'Thetford', 'Gorleston-on-Sea', 'Dereham', 'Taverham', 'Wymondham', 'North Walsham', 'Downham Market', 'Attleborough', 'Diss', 'Caister-on-Sea', 'Hunstanton', 'Watton', 'Fakenham', 'Cromer', 'Sheringham', 'Swaffham', 'Aylsham', 'Hemsby', 'Hethersett', 'Poringland', 'Dersingham', 'Belton'],
+        'North Yorkshire' => ['York', 'Middlesbrough', 'Harrogate', 'Scarborough', 'Redcar', 'Thornaby', 'Northallerton', 'Selby', 'Skipton', 'Whitby', 'Ripon', 'Filey', 'Malton', 'Knaresborough', 'Pickering', 'Richmond', 'Easingwold', 'Stokesley', 'Bedale', 'Tadcaster', 'Boroughbridge', 'Settle', 'Pateley Bridge', 'Leyburn', 'Helmsley', 'Guisborough', 'Loftus', 'Eston', 'Great Ayton', 'Marske-by-the-Sea'],
+        'Northamptonshire' => ['Northampton', 'Corby', 'Kettering', 'Wellingborough', 'Rushden', 'Daventry', 'Brackley', 'Desborough', 'Towcester', 'Burton Latimer', 'Raunds', 'Irthlingborough', 'Higham Ferrers', 'Rothwell', 'Thrapston', 'Oundle', 'Earls Barton', 'Brixworth'],
+        'Northumberland' => ['Blyth', 'Cramlington', 'Ashington', 'Bedlington', 'Morpeth', 'Berwick-upon-Tweed', 'Hexham', 'Prudhoe', 'Ponteland', 'Stakeford', 'Alnwick', 'Seaton Delaval', 'Newbiggin-by-the-Sea', 'Amble'],
+        'Nottinghamshire' => ['Nottingham', 'Mansfield', 'Beeston', 'Sutton-in-Ashfield', 'Arnold', 'Worksop', 'West Bridgford', 'Newark-on-Trent', 'Kirkby-in-Ashfield', 'Carlton', 'Hucknall', 'Eastwood', 'Retford', 'Stapleford', 'Bingham', 'Kimberley', 'Radcliffe-on-Trent', 'Southwell', 'Ollerton', 'Calverton', 'Edwinstowe', 'Rainworth', 'Warsop', 'Clipstone', 'Cotgrave', 'Blidworth', 'Ruddington', 'Keyworth', 'Harworth', 'Balderton'],
+        'Oxfordshire' => ['Oxford', 'Banbury', 'Abingdon-on-Thames', 'Bicester', 'Witney', 'Didcot', 'Carterton', 'Kidlington', 'Henley-on-Thames', 'Wallingford', 'Thame', 'Wantage', 'Grove', 'Faringdon', 'Chipping Norton', 'Chinnor', 'Benson', 'Eynsham', 'Wheatley', 'Kennington', 'Woodstock', 'Charlbury', 'Watlington', 'Bampton', 'Deddington'],
+        'Rutland' => ['Oakham', 'Uppingham', 'Ketton', 'Ryhall', 'Langham', 'Whissendine', 'Cottesmore', 'Kendrew Barracks', 'Empingham', 'Edith Weston', 'North Luffenham', 'Greetham', 'Exton', 'Great Casterton', 'Market Overton', 'Barrowden', 'Braunston-in-Rutland', 'South Luffenham', 'Essendine', 'Lyddington', 'Manton', 'Belton-in-Rutland', 'Morcott', 'Seaton'],
+        'Shropshire' => ['Shrewsbury', 'Telford', 'Oswestry', 'Bridgnorth', 'Ludlow', 'Market Drayton', 'Whitchurch', 'Newport', 'Wem', 'Church Stretton', 'Ellesmere', 'Broseley', 'Bishop\'s Castle', 'Much Wenlock', 'Craven Arms', 'Shifnal', 'Cleobury Mortimer'],
+        'Somerset' => ['Bath', 'Weston-super-Mare', 'Taunton', 'Yeovil', 'Bridgwater', 'Frome', 'Portishead', 'Clevedon', 'Burnham-on-Sea', 'Wellington', 'Chard', 'Minehead', 'Street', 'Nailsea', 'Shepton Mallet', 'Glastonbury', 'Wells', 'Midsomer Norton', 'Radstock', 'Ilminster', 'Wincanton', 'Bruton', 'Watchet', 'Crewkerne', 'Highbridge', 'Keynsham', 'Axbridge', 'Castle Cary'],
+        'South Yorkshire' => ['Sheffield', 'Doncaster', 'Rotherham', 'Barnsley', 'Wath-upon-Dearne', 'Bentley', 'Wombwell', 'Chapeltown', 'Dinnington', 'Rawmarsh', 'Adwick-le-Street', 'Hoyland', 'Maltby', 'Swinton', 'Penistone', 'Thorne', 'Mexborough', 'Stocksbridge', 'Conisbrough', 'Armthorpe', 'Askern', 'Goldthorpe', 'Edlington', 'Tickhill', 'Cudworth', 'Royston', 'Worsbrough', 'Dodworth', 'Denaby Main', 'Brinsworth'],
+        'Staffordshire' => ['Stoke-on-Trent', 'Tamworth', 'Newcastle-under-Lyme', 'Burton upon Trent', 'Stafford', 'Lichfield', 'Cannock', 'Burntwood', 'Kidsgrove', 'Rugeley', 'Leek', 'Biddulph', 'Hednesford', 'Stone', 'Wombourne', 'Uttoxeter', 'Cheadle', 'Great Wyrley', 'Perton', 'Penkridge', 'Codsall', 'Norton Canes', 'Eccleshall', 'Bilbrook', 'Kinver', 'Armitage'],
+        'Suffolk' => ['Ipswich', 'Lowestoft', 'Bury St Edmunds', 'Haverhill', 'Felixstowe', 'Sudbury', 'Newmarket', 'Stowmarket', 'Kesgrave', 'Beccles', 'Mildenhall', 'Woodbridge', 'Brandon', 'Hadleigh', 'Leiston', 'Trimley St Mary', 'Halesworth', 'Bungay'],
+        'Surrey' => ['Woking', 'Guildford', 'Walton-on-Thames', 'Ewell', 'Esher', 'Camberley', 'Redhill', 'Leatherhead', 'Epsom', 'Weybridge', 'Ashford', 'Egham', 'Staines', 'Farnham', 'Horley', 'Godalming', 'Reigate', 'Caterham', 'Frimley', 'Cobham', 'Dorking', 'Addlestone', 'Ashtead', 'Chertsey', 'Oxted', 'Haslemere', 'Banstead', 'Cranleigh', 'Warlingham', 'Lightwater', 'Hindhead', 'Witley', 'Virginia Water', 'East Horsley', 'Bagshot', 'West Clandon', 'Whitebushes'],
+        'Tyne and Wear' => ['Newcastle upon Tyne', 'Sunderland', 'Gateshead', 'South Shields', 'North Shields', 'Washington', 'Jarrow', 'Hebburn', 'Whitley Bay', 'Cramlington', 'Killingworth', 'Wallsend', 'Boldon Colliery', 'East Boldon', 'West Boldon', 'Seaham', 'Ryhope', 'Houghton-le-Spring', 'Felling', 'Birtley', 'Cleadon', 'Monkseaton', 'Tynemouth'],
+        'Warwickshire' => ['Nuneaton', 'Rugby', 'Royal Leamington Spa', 'Warwick', 'Bedworth', 'Stratford-upon-Avon', 'Kenilworth', 'Atherstone', 'Polesworth', 'Whitnash', 'Southam', 'Kingsbury', 'Wellesbourne', 'Alcester', 'Coleshill', 'Studley', 'Bulkington', 'Shipston-on-Stour', 'Bidford-on-Avon', 'Long Lawford'],
+        'West Midlands' => ['Birmingham', 'Coventry', 'Wolverhampton', 'Solihull', 'West Bromwich', 'Sutton Coldfield', 'Walsall', 'Dudley', 'Halesowen', 'Stourbridge', 'Smethwick', 'Kingswinford', 'Bloxwich', 'Willenhall', 'Bilston', 'Brierley Hill', 'Sedgley', 'Oldbury', 'Tipton', 'Wednesbury', 'Cradley Heath', 'Darlaston', 'Brownhills', 'Pelsall', 'Rowley Regis', 'Bearwood', 'Yew Tree'],
+        'West Sussex' => ['Worthing', 'Crawley', 'Bognor Regis', 'Littlehampton', 'Shoreham-by-Sea', 'Horsham', 'Haywards Heath', 'Hurstpierpoint', 'Southwick', 'Selsey', 'Westergate', 'Southwater', 'Storrington', 'West Chiltington Common', 'Billingshurst', 'Steyning', 'East Wittering'],
+        'West Yorkshire' => ['Leeds', 'Bradford', 'Huddersfield', 'Wakefield', 'Halifax', 'Batley', 'Dewsbury', 'Keighley', 'Castleford', 'Brighouse', 'Pudsey', 'Morley', 'Pontefract', 'Shipley', 'Bingley', 'Holmfirth', 'Normanton', 'Ossett', 'Yeadon', 'Rothwell', 'Mirfield', 'Horsforth', 'Liversedge', 'Baildon', 'Elland', 'Garforth', 'Ilkley', 'Otley', 'Knottingley', 'Heckmondwike', 'Guiseley', 'Todmorden', 'Cleckheaton', 'Wetherby', 'Featherstone', 'South Elmsall', 'Horbury', 'Kippax', 'Hemsworth', 'South Kirkby', 'Silsden', 'Meltham', 'Burley', 'Haworth', 'Upton', 'Shepley', 'Thornton', 'Ackworth', 'Crofton', 'Ryhill', 'Allerton Bywater', 'Ripponden', 'Boston Spa', 'Sowerby Bridge', 'Skelmanthorpe'],
+        'Wiltshire' => ['Swindon', 'Salisbury', 'Trowbridge', 'Chippenham', 'Melksham', 'Devizes', 'Warminster', 'Calne', 'Westbury', 'Corsham', 'Wootton Bassett', 'Amesbury', 'Tidworth', 'Bradford-on-Avon', 'Bulford Camp', 'Marlborough', 'Highworth', 'Wroughton', 'Malmesbury', 'Hilperton', 'Lyneham', 'Ludgershall', 'Purton', 'Cricklade', 'Bulford', 'Pewsey', 'Wilton', 'Box', 'Redlynch', 'Downton', 'Colerne'],
+        'Worcestershire' => ['Worcester', 'Redditch', 'Kidderminster', 'Malvern', 'Bromsgrove', 'Evesham', 'Droitwich', 'Stourport-on-Severn', 'Catshill', 'Bewdley', 'Pershore'],
+    ],
+    'Northern Ireland' => [
+        'County Antrim' => ['Belfast', 'Lisburn', 'Newtownabbey', 'Ballymena', 'Carrickfergus', 'Ballymoney', 'Ballyclare'],
+        'County Armagh' => ['Lurgan', 'Portadown', 'Newry'],
+        'County Down' => ['Bangor', 'Newtownards', 'Downpatrick', 'Holywood'],
+        'County Fermanagh' => ['Enniskillen'],
+        'County Londonderry' => ['Derry City', 'Coleraine', 'Limavady'],
+        'County Tyrone' => ['Omagh', 'Dungannon', 'Strabane', 'Cookstown'],
+    ],
+    'Scotland' => [
+        'Aberdeen City' => ['Aberdeen', 'Cove Bay', 'Dyce', 'Milltimber', 'Peterculter'],
+        'Aberdeenshire' => ['Peterhead', 'Fraserburgh', 'Inverurie', 'Stonehaven', 'Ellon'],
+        'Angus' => ['Arbroath', 'Forfar', 'Montrose', 'Brechin', 'Carnoustie'],
+        'Argyll and Bute' => ['Helensburgh', 'Oban', 'Dunoon', 'Campbeltown', 'Rothesay'],
+        'Clackmannanshire' => ['Alloa', 'Tillicoultry', 'Alva', 'Dollar', 'Tullibody'],
+        'Dumfries and Galloway' => ['Dumfries', 'Stranraer', 'Annan', 'Lockerbie', 'Castle Douglas'],
+        'Dundee City' => ['Dundee', 'Broughty Ferry', 'Invergowrie'],
+        'East Ayrshire' => ['Kilmarnock', 'Cumnock', 'Galston', 'Stewarton', 'Hurlford'],
+        'East Dunbartonshire' => ['Kirkintilloch', 'Bearsden', 'Milngavie', 'Bishopbriggs', 'Lenzie'],
+        'East Lothian' => ['Musselburgh', 'Haddington', 'North Berwick', 'Dunbar', 'Tranent'],
+        'East Renfrewshire' => ['Newton Mearns', 'Giffnock', 'Clarkston', 'Thornliebank'],
+        'Edinburgh' => ['Edinburgh', 'Leith', 'Portobello', 'Morningside'],
+        'Falkirk' => ['Grangemouth', 'Bo\'ness', 'Denny', 'Larbert'],
+        'Fife' => ['Dunfermline', 'Kirkcaldy', 'Glenrothes', 'Leven', 'St Andrews'],
+        'Glasgow' => ['Glasgow', 'Partick', 'Govan', 'Pollokshields', 'Maryhill'],
+        'Highland' => ['Inverness', 'Fort William', 'Nairn', 'Wick', 'Thurso'],
+        'Inverclyde' => ['Greenock', 'Gourock', 'Wemyss Bay', 'Port Glasgow', 'Kilmacolm'],
+        'Midlothian' => ['Dalkeith', 'Bonnyrigg', 'Penicuik', 'Loanhead', 'Gorebridge'],
+        'Moray' => ['Elgin', 'Forres', 'Lossiemouth', 'Buckie', 'Keith'],
+        'Western Isles' => ['Stornoway', 'Tarbert', 'Benbecula', 'Lochmaddy', 'Castlebay'],
+        'North Ayrshire' => ['Irvine', 'Kilwinning', 'Largs', 'Saltcoats', 'Ardrossan'],
+        'North Lanarkshire' => ['Motherwell', 'Airdrie', 'Coatbridge', 'Wishaw', 'Cumbernauld'],
+        'Orkney Islands' => ['Kirkwall', 'Stromness', 'St Margaret\'s Hope', 'Dounby'],
+        'Perth and Kinross' => ['Perth', 'Kinross', 'Blairgowrie', 'Crieff', 'Pitlochry'],
+        'Renfrewshire' => ['Paisley', 'Renfrew', 'Johnstone', 'Erskine', 'Linwood'],
+        'Scottish Borders' => ['Galashiels', 'Hawick', 'Kelso', 'Peebles', 'Jedburgh'],
+        'Shetland Islands' => ['Lerwick', 'Scalloway', 'Brae', 'Hillswick'],
+        'South Ayrshire' => ['Ayr', 'Prestwick', 'Troon', 'Maybole', 'Girvan'],
+        'South Lanarkshire' => ['East Kilbride', 'Rutherglen', 'Hamilton', 'Cambuslang', 'Lanark'],
+        'Stirling' => ['Bridge of Allan', 'Dunblane', 'Callander', 'Bannockburn', 'Balloch'],
+        'West Dunbartonshire' => ['Clydebank', 'Dumbarton', 'Renton', 'Alexandria'],
+        'West Lothian' => ['Livingston', 'Bathgate', 'Broxburn', 'Linlithgow', 'Armadale'],
+    ],
+    'Wales' => [
+        'Blaenau Gwent' => ['Ebbw Vale', 'Brynmawr', 'Abertillery', 'Tredegar'],
+        'Bridgend' => ['Maesteg', 'Porthcawl', 'Pencoed'],
+        'Caerphilly' => ['Blackwood', 'Bargoed', 'Risca', 'Ystrad Mynach'],
+        'Cardiff' => ['Llanrumney', 'Splott', 'Llandaff'],
+        'Carmarthenshire' => ['Llanelli', 'Carmarthen', 'Ammanford', 'Burry Port'],
+        'Ceredigion' => ['Aberystwyth'],
+        'Conwy' => ['Llandudno', 'Colwyn Bay', 'Kinmel Bay', 'Abergele'],
+        'Denbighshire' => ['Rhyl', 'Prestatyn'],
+        'Flintshire' => ['Connah\'s Quay', 'Flint', 'Mold'],
+        'Gwynedd' => ['Bangor', 'Caernarfon'],
+        'Isle of Anglesey' => ['Holyhead'],
+        'Merthyr Tydfil' => ['Merthyr Tydfil'],
+        'Monmouthshire' => ['Abergavenny', 'Monmouth', 'Chepstow', 'Caldicot'],
+        'Neath Port Talbot' => ['Neath', 'Port Talbot'],
+        'Newport' => ['Caerleon'],
+        'Pembrokeshire' => ['Milford Haven', 'Haverfordwest'],
+        'Powys' => ['Newtown', 'Brecon'],
+        'Rhondda Cynon Taf' => ['Tonypandy', 'Aberdare', 'Pontypridd', 'Mountain Ash'],
+        'Swansea' => ['Gorseinon', 'Pontarddulais'],
+        'Torfaen' => ['Cwmbran', 'Pontypool'],
+        'Vale of Glamorgan' => ['Barry', 'Llantwit Major'],
+        'Wrexham' => ['Wrexham'],
+    ]
+];
+
+// Slug generation function
+function prohandymen_slugify($text) {
+    // Remove apostrophes first
+    $text = str_replace("'", "", $text);
+    // Replace non-letter/non-digit characters with hyphens
+    $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+    // Transliterate to ASCII
+    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    // Remove unwanted characters
+    $text = preg_replace('~[^-\w]+~', '', $text);
+    // Trim hyphens
+    $text = trim($text, '-');
+    // Collapse multiple hyphens
+    $text = preg_replace('~-+~', '-', $text);
+    // Convert to lowercase
+    return strtolower($text);
+}
+
+// Internal links shortcode handler
+function prohandymen_internal_links_shortcode($atts) {
+    global $prohandymen_locations;
+    
+    // Homepage - List countries
+    if (is_front_page()) {
+        $output = '<ul class="area-links">';
+        foreach ($prohandymen_locations as $country => $states) {
+            $slug = prohandymen_slugify($country);
+            $output .= '<li><a href="' . home_url('/near-me/' . $slug) . '">' . $country . '</a></li>';
+        }
+        return $output . '</ul>';
+    }
+
+    // Parse current URL path
+    $current_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+    $segments = explode('/', $current_path);
+    
+    // Handle near-me pages
+    if (isset($segments[0]) && $segments[0] === 'near-me') {
+        array_shift($segments);
+
+        // Country level page
+        if (count($segments) >= 1) {
+            $request_slug = $segments[0];
+            
+            // Check if country exists
+            foreach ($prohandymen_locations as $country => $states) {
+                if (prohandymen_slugify($country) === $request_slug) {
+                    $output = '<ul class="area-links">';
+                    foreach ($states as $state => $cities) {
+                        $state_slug = prohandymen_slugify($state);
+                        $output .= '<li><a href="' . home_url('/near-me/' . $state_slug) . '">' . $state . '</a></li>';
+                    }
+                    return $output . '</ul>';
+                }
+            }
+
+            // Check if state exists
+            foreach ($prohandymen_locations as $country => $states) {
+                foreach ($states as $state => $cities) {
+                    if (prohandymen_slugify($state) === $request_slug) {
+                        $output = '<ul class="area-links">';
+                        foreach ($cities as $city) {
+                            $city_slug = prohandymen_slugify($city);
+                            $output .= '<li><a href="' . home_url('/near-me/' . $request_slug . '/' . $city_slug) . '">' . $city . '</a></li>';
+                        }
+                        return $output . '</ul>';
+                    }
+                }
+            }
+        }
+    }
+    
+    return '';
+}
+
+// Register the shortcode
+add_shortcode('internal_links', 'prohandymen_internal_links_shortcode');
