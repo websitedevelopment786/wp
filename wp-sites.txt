@@ -1,0 +1,7 @@
+i want deal 2000+ wordpress sites on single wordpress installation on hostinger. which has more scaleablitiy in wordpress community for multisites creation possible. 
+
+feathures listing :
+1) wordpress single shared network for core wordpress files / themes and plugins.
+2) support all wordpress theme and plugins all over community.
+3) allow to attach 2000+ sites on this shared network.
+4) for every site should have solo different database and uploads or wp-content directory
